@@ -8,5 +8,8 @@ export interface Deal{
     status:string,
     date:Date,
     probability_status:string,
-    state:string
+    state:string,
+    email:string,
+    getFullName():string,
+    setStatus(status:string):void
 }

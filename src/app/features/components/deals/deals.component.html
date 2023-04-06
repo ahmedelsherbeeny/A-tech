@@ -1,0 +1,25 @@
+
+<div class="search-container mt-3 w-50 ">
+  <div class="input-group">
+    <input type="text" [(ngModel)]="searchTerm" (keyup)="onSearch()" class="form-control" placeholder="Search deals...">
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="button">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="deals-list row mt-4" cdkDropListGroup>
+  <div *ngFor="let status of statuses " class="col-md-3 col-sm-6 col-xs-12 deal-column" [attr.id]="status" 
+    cdkDropList  [cdkDropListData]="filteredDeals[status]"
+   (cdkDropListDropped)="onDrop($event)"  >
+    <h2 class="p-1 d-block" style="height: 75px; color: rgb(20, 20, 77);">{{ status }}</h2>
+    <app-deal *ngFor="let deal of filteredDeals[status]" [deal]="deal" cdkDrag [attr.id]="status"></app-deal>
+    <ng-container *ngIf="filteredDeals[status].length === 0">
+      <p>No deals found.</p>
+    </ng-container>
+  </div>
+</div>
+
+

@@ -6,14 +6,14 @@ import { Deal } from 'src/app/models/deal.interface';
 })
 export class FilterByStatusPipe implements PipeTransform {
 
-  transform(deals:Deal[],status:string): Deal[] {
+  transform(deals:Deal[],status:string): any[] {
     if(!deals){
       return []
     }
     if(!status){
       return []
     }
-    return deals.filter(deal=>deal.status===status)
+    return deals.filter((deal:Deal)=>deal.status===status)
 
   }
 
