@@ -1,7 +1,9 @@
+<!-- CARD UI -->
 <div class="deal-card mt-4" [ngClass]="{
     'bg-success-deal': deal.status === 'Getting Ready',
     'bg-danger-deal': deal.status === 'Closed'
   }">
+
   <div class="deal-card-header">
     <h3 class="text-white">{{ deal.company }}</h3>
     <span class="deal-status">{{ deal.status }}</span>

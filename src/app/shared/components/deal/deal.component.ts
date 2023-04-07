@@ -7,6 +7,8 @@ import { Deal } from 'src/app/models/deal.interface';
   styleUrls: ['./deal.component.scss']
 })
 export class DealComponent {
+
+  // this input accepts a deal of type Deal and then spread the data of each deal in a card
   @Input() deal!:any
 
 }
