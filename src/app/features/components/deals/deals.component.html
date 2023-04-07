@@ -1,25 +1,49 @@
 
-<div class="search-container mt-3 w-50 ">
-  <div class="input-group">
-    <input type="text" [(ngModel)]="searchTerm" (keyup)="onSearch()" class="form-control" placeholder="Search deals...">
-    <div class="input-group-append">
-      <button class="btn btn-primary" type="button">
-        <i class="fa fa-search"></i>
-      </button>
+<!-- search bar -->
+<div class="inputs-container mt-5 w-100 pe-4">
+  <div class="row">
+    <div class="col-md-3 mb-3 mb-md-0">
+      <select class="form-select">
+        <option selected>Segment:All</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+    </div>
+    <div class="col-md-3 mb-3 mb-md-0">
+      <select class="form-select">
+        <option selected>Asignee:All</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+    </div>
+    <div class="col-md-3 mb-3 mb-md-0">
+      <select class="form-select">
+        <option selected>Status:All</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+        <option value="3">Option 3</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <input type="text" [(ngModel)]="searchTerm" (keyup)="onSearch()" class="form-control" placeholder="Search deals...">
     </div>
   </div>
+  
+    
+    
+
 </div>
 
+<!-- deals list with drag and drop functionality -->
 <div class="deals-list row mt-4" cdkDropListGroup>
-  <div *ngFor="let status of statuses " class="col-md-3 col-sm-6 col-xs-12 deal-column" [attr.id]="status" 
-    cdkDropList  [cdkDropListData]="filteredDeals[status]"
-   (cdkDropListDropped)="onDrop($event)"  >
-    <h2 class="p-1 d-block" style="height: 75px; color: rgb(20, 20, 77);">{{ status }}</h2>
+  <div *ngFor="let status of statuses " class="col-md-3 col-sm-6 col-xs-12  deal-column" [attr.id]="status" cdkDropList
+    [cdkDropListData]="filteredDeals[status]" (cdkDropListDropped)="onDrop($event,status)">
+    <h2 class="p-1 d-block " style=" color: rgba(18, 18, 58, 0.977);">{{ status }}</h2>
     <app-deal *ngFor="let deal of filteredDeals[status]" [deal]="deal" cdkDrag [attr.id]="status"></app-deal>
     <ng-container *ngIf="filteredDeals[status].length === 0">
       <p>No deals found.</p>
     </ng-container>
   </div>
 </div>
-
-

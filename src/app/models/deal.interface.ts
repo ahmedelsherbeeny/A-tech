@@ -10,6 +10,5 @@ export interface Deal{
     probability_status:string,
     state:string,
     email:string,
-    getFullName():string,
-    setStatus(status:string):void
+   
 }

@@ -1,8 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, map, takeUntil } from 'rxjs';
 import { Deal } from 'src/app/models/deal.interface';
-import {  DealDetails } from 'src/app/models/deal.model';
 import { DealService } from 'src/app/services/deal.service';
 
 
@@ -10,88 +9,118 @@ import { DealService } from 'src/app/services/deal.service';
   selector: 'app-deals',
   templateUrl: './deals.component.html',
   styleUrls: ['./deals.component.scss'],
-  providers:[DealDetails]
+  providers: []
 })
-export class DealsComponent implements OnInit {
+export class DealsComponent implements OnInit, OnDestroy {
 
 
 
   private dealsSubject = new BehaviorSubject<Deal[]>([]);
+  unsubscribe$: Subject<boolean> = new Subject();
+
   deals$ = this.dealsSubject.asObservable();
-    filteredDeals: { [key: string]: Deal[] } = {
+  filteredDeals: { [key: string]: Deal[] } = {
     'Potential Value': [],
     'Focus': [],
     'Contact Made': [],
     'Offer Sent': [],
     'Getting Ready': [],
     'Closed': []
-  
+
   };
   statuses: string[] = Object.keys(this.filteredDeals);
   searchTerm: string = '';
 
-      constructor(private dealService:DealService){}                   
-
-ngOnInit(): void {
-  this.getDeals()
+  constructor(private dealService: DealService) { }
 
 
+  ngOnInit(): void {
 
-  
+    this.getDeals()
+
+
   }
+
 
   getDeals(): void {
-    this.dealService.getAllDeals().subscribe(data=>{
-      this.dealsSubject.next(data)
-      this.updateFilteredDeals()
-    })
-   
+    this.dealService.getAllDeals()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(data => {
+        this.dealsSubject.next(data)
+        this.updateFilteredDeals()
+      })
+
   }
- 
-
-  
 
 
-  onDrop(event: CdkDragDrop<Deal[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+
+
+
+  onDrop(event: CdkDragDrop<Deal[]>, status: string) {
+
+    const { previousContainer, container, previousIndex, currentIndex } = event
+    if (previousContainer === container) {
+      moveItemInArray(container.data, previousIndex, currentIndex);
 
     } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
-                        console.log(event)
-      
+
+
+      previousContainer.data[previousIndex].status = status
+      transferArrayItem(previousContainer.data,
+        container.data,
+        previousIndex,
+        currentIndex);
+
     }
   }
 
+
   onSearch(): void {
     this.updateFilteredDeals();
-    console.log(this.searchTerm)
   }
-  
+
+
+
+
   updateFilteredDeals(): void {
-    this.deals$.subscribe(deals => {
+    this.deals$.pipe(takeUntil(this.unsubscribe$)).subscribe(deals => {
       for (const status of this.statuses) {
-        this.filteredDeals[status] = deals
-          .filter(deal => deal.status === status)
-          .filter(deal => {
-            const searchRegex = new RegExp(this.searchTerm, 'i');
-            return searchRegex.test(deal.first_name) ||
-                   searchRegex.test(deal.last_name) ||
-                   searchRegex.test(deal.email);
-          })
+        this.filteredDeals[status] = this.filterDeals(deals, status)
           .map(deal => ({ ...deal }));
       }
-      console.log(this.searchTerm)
-    });    
+    });
+  }
+
+
+
+
+  filterDeals(deals: Deal[], status: string): Deal[] {
+    const searchRegex = new RegExp(this.searchTerm, 'i');
+
+    return deals
+      .filter(deal => deal.status === status)
+      .filter(deal => {
+        return searchRegex.test(deal.first_name) ||
+          searchRegex.test(deal.last_name) ||
+          searchRegex.test(deal.email);
+      })
+
+
+
+  }
+
+
+
+
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(true)
   }
 }
 
-  
 
- 
+
+
 
 
 

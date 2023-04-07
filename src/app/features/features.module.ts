@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FeaturesRoutingModule } from './features-routing.module';
 import { DealsComponent } from './components/deals/deals.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { FilterByStatusPipe } from '../helpers/pipes/filter-by-status.pipe';
 import { DealComponent } from '../shared/components/deal/deal.component';
 import { FormsModule } from '@angular/forms';
 
@@ -14,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     DealsComponent,
-    FilterByStatusPipe,
     DealComponent
 
   ],

@@ -1,27 +1,48 @@
-# ATechTask
+# CRM Pipeline Mnagement Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
+This is a single-page application (SPA) built with Angular that allows users to manage and visualize their deals pipeline. The application fetches deals data from a public CRM contacts API endpoint and displays it in a pipeline divided into multiple stages. Users can drag and drop deals between the stages of the pipeline and update their status. The application also provides search functionality to search for contacts based on first name, last name, or email.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+To run the application locally, follow these steps:
 
-## Code scaffolding
+1. Clone the repository or download the source code as a ZIP file.
+2. Install the required dependencies using npm install.
+3. Start the development server using ng serve.
+4. Open the application in your browser at http://localhost:4200.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Features
 
-## Build
+* Visualize deals data in a pipeline divided into multiple stages.
+* Drag and drop deals between the stages of the pipeline.
+* Update deal status when it is moved to a different stage.
+* Search for contacts based on first name, last name, or email.
+* Responsive design that works on both desktop and mobile devices
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Technologies
 
-## Running unit tests
+* Angular 15
+* Angular CDK Drag and Drop module
+* Angular Forms Module
+* RxJS
+* Bootstrap 5
+* CSS Flexbox 
+* TypeScript
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## API Endpoint
 
-## Running end-to-end tests
+The application fetches deals data from the following dummy API endpoint: https://my-json-server.typicode.com/mabukoush1/contacts/db
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Deployment
+ This application is deployed on Netlify and can be accessed at the following 
+ <!-- link: https://example-app.netlify.app -->
 
-## Further help
+Replace "example-app" with the name of your own application and the link with the actual link to your deployed application.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Credits
+
+This application was created by Ahmed Elsherbeeny as a coding assignment.
+
+
+
+
