@@ -34,10 +34,10 @@ To run the application locally, follow these steps:
 The application fetches deals data from the following dummy API endpoint: https://my-json-server.typicode.com/mabukoush1/contacts/db
 
 ## Deployment
- This application is deployed on Netlify and can be accessed at the following 
- <!-- link: https://example-app.netlify.app -->
+ This application is deployed on github pages and can be accessed at the following 
+ link: https://ahmedelsherbeeny.github.io/A-tech/
 
-Replace "example-app" with the name of your own application and the link with the actual link to your deployed application.
+
 
 ## Credits
 
